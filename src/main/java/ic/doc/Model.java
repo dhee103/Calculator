@@ -27,7 +27,7 @@ public class Model {
 
     public String calculateAnswer(String input) {
         Stack<String> stack = new Stack<>();
-        String[] ops = input.split("\\s+");
+        String[] ops = input.split("\\(|\\)|\\s");
 
 //  infix to reverse polish notation
         ops = infixToRPN(Arrays.copyOfRange(ops, 1, ops.length));
@@ -93,7 +93,6 @@ public class Model {
         } else {
             return invalid;
         }
-
     }
 
     private Boolean isOperator(String input) {
@@ -105,9 +104,7 @@ public class Model {
         return s.matches("[-+]?\\d*\\.?\\d+");
     }
 
-    private boolean checkInvalid(String input) {
-        return input.equals(invalid);
-    }
+    private boolean checkInvalid(String input) { return input.equals(invalid); }
 
     private String applyOperand(String inp1, String inp2, String op) {
         if (checkInvalid(inp1) || checkInvalid(inp2)) {
@@ -127,12 +124,7 @@ public class Model {
                 }
                 return String.valueOf((Integer.parseInt(inp1) / Integer.parseInt(inp2)));
         }
-        return "Invalid Operator";
+        return invalid + " Operator";
     }
-
-
-
-
-
 
 }
