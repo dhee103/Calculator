@@ -3,9 +3,6 @@ package ic.doc;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by dsg115 on 27/11/16.
- */
 public class ControllerOps implements ActionListener {
     private final String op;
     private final Model model;

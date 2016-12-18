@@ -9,7 +9,6 @@ public class Calculator {
     private final View v;
     private final Model m;
 
-
     public Calculator() {
         v = new View();
         m = new Model(v);
@@ -40,6 +39,5 @@ public class Calculator {
     public static void main(String[] args) {
         new Calculator();
     }
-
 
 }
