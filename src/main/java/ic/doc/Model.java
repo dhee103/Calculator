@@ -1,6 +1,6 @@
 package ic.doc;
 
-import java.util.Stack;
+import java.util.*;
 
 public class Model {
 
@@ -29,6 +29,9 @@ public class Model {
         Stack<String> stack = new Stack<>();
         String[] ops = input.split("\\s+");
 
+//  infix to reverse polish notation
+        ops = infixToRPN(Arrays.copyOfRange(ops, 1, ops.length));
+
         for (String x: ops) {
             if (x.equals("")) {
                 continue;
@@ -45,6 +48,45 @@ public class Model {
 
     }
 
+    private String[] infixToRPN(String[] input) {
+
+        Map<String, Integer> prededence = new HashMap<>();
+        prededence.put("/", 5);
+        prededence.put("*", 5);
+        prededence.put("+", 4);
+        prededence.put("-", 4);
+        prededence.put("(", 0);
+
+        Queue<String> rpn = new LinkedList<>();
+        Stack<String> ops = new Stack<>();
+
+        for (String s: input) {
+            if (Character.isSpaceChar(s.charAt(0))) continue;
+            else if (isNumeric(s)) rpn.add(s);
+            else if (s.equals("(")) ops.add(s);
+
+            else if (s.equals(")")) {
+                while (!ops.peek().equals("(")) rpn.add(ops.pop());
+                ops.pop();
+            }
+            else if(isOperator(s)) {
+                /*operator rule checks */
+                while (!ops.isEmpty() && prededence.get(ops.peek()) >= prededence.get(s)) {
+                    rpn.add(ops.pop());
+                }
+                ops.push(s);
+            }
+        }
+
+//        ops.forEach(op -> rpn.add(op));
+        for (String op: ops) rpn.add(op);
+
+        String[] rpnOutput = new String[rpn.size()];
+        for (int i = 0; i < rpnOutput.length; i++) rpnOutput[i] = rpn.remove();
+
+        return rpnOutput;
+    }
+
     private String getOperand(Stack<String> stack) {
         if (!stack.isEmpty() && isNumeric(stack.peek())) {
             return stack.pop();
@@ -58,6 +100,7 @@ public class Model {
         return input.equals("+") || input.equals("-") || input.equals("*") || input.equals("/");
     }
 
+//    TODO: Replace all uses with isDigit
     private boolean isNumeric(String s) {
         return s.matches("[-+]?\\d*\\.?\\d+");
     }
