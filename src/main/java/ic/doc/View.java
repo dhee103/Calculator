@@ -41,7 +41,6 @@ class View implements Updatable {
         JFrame frame = new JFrame("Calculator");
         frame.setSize(200, 160);
 
-        JPanel calcPanel = new JPanel(new GridBagLayout());
         Container contentPane = frame.getContentPane();
         contentPane.setLayout(new FlowLayout());
 
@@ -55,9 +54,7 @@ class View implements Updatable {
         contentPane.add(equals, BorderLayout.WEST);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.getContentPane().add(calcPanel);
         frame.setVisible(true);
-
     }
 
     void setControllerOps(List<ActionListener> controllerOps) {
