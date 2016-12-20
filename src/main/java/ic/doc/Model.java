@@ -29,8 +29,11 @@ public class Model {
         Stack<String> stack = new Stack<>();
         String[] ops = input.split("\\(|\\)|\\s");
 
-//  infix to reverse polish notation
-        ops = infixToRPN(Arrays.copyOfRange(ops, 1, ops.length));
+//      infix to reverse polish notation
+        boolean isRPN = isOperator(ops[ops.length - 1]);
+        if (!isRPN) {
+            ops = infixToRPN(Arrays.copyOfRange(ops, 1, ops.length));
+        }
 
         for (String x: ops) {
             if (x.equals("")) {
