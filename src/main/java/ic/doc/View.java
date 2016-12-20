@@ -2,6 +2,7 @@ package ic.doc;
 
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 
@@ -40,17 +41,21 @@ class View implements Updatable {
         JFrame frame = new JFrame("Calculator");
         frame.setSize(200, 160);
 
-        JPanel calcPanel = new JPanel();
-        calcPanel.add(outputField);
-        for (JButton button : opsButtons) {
-            calcPanel.add(button);
-        }
-        calcPanel.add(clear);
-        calcPanel.add(equals);
+        JPanel calcPanel = new JPanel(new GridBagLayout());
+        Container contentPane = frame.getContentPane();
+        contentPane.setLayout(new FlowLayout());
 
+        contentPane.add(outputField, BorderLayout.NORTH);
+
+        for (JButton button : opsButtons) {
+            contentPane.add(button, BorderLayout.WEST);
+        }
+
+        contentPane.add(clear, BorderLayout.WEST);
+        contentPane.add(equals, BorderLayout.WEST);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(calcPanel);
+//        frame.getContentPane().add(calcPanel);
         frame.setVisible(true);
 
     }
@@ -59,7 +64,6 @@ class View implements Updatable {
         for (int i = 0; i < opsButtons.length; i++) {
             opsButtons[i].addActionListener(controllerOps.get(i));
         }
-
     }
 
     void setControllerEqual(ActionListener controller) {
